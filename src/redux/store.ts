@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import CounterReducer from "./features/counter/counterSlice";
 import TaskReducer from "./features/task/taskSlice";
 import wishlistReducer from "./features/wishList/wishListSlice"
+import authReducer from "./features/auth/authSlice";  
 import { baseApi } from "./api/baseApi";  
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -9,10 +10,11 @@ import { persistReducer, persistStore } from "redux-persist";
 const persistConfig = {
   key: "root",
   storage,
-   whitelist: ["tasks", "counter", "wishlist"], 
+   whitelist: ["tasks", "counter", "wishlist", "auth"], 
 };
 
 const rootReducer = combineReducers({
+  auth: authReducer, 
   tasks: TaskReducer,
   counter: CounterReducer,
   wishlist: wishlistReducer,
