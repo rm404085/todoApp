@@ -7,6 +7,7 @@ import Register from "@/page/login/register/Register";
 import WishlistPage from "@/page/WishList/WishListPage";
 import { createBrowserRouter } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
+import ProductDetails from "@/components/Products/ProductsDetails";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
             <Products />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails></ProductDetails>
       },
 
       {

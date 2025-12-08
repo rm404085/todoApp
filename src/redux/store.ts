@@ -3,6 +3,7 @@ import CounterReducer from "./features/counter/counterSlice";
 import TaskReducer from "./features/task/taskSlice";
 import wishlistReducer from "./features/wishList/wishListSlice"
 import authReducer from "./features/auth/authSlice";  
+import preferenceReducer from "./features/preference/preferenceSlice"
 import { baseApi } from "./api/baseApi";  
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -10,7 +11,7 @@ import { persistReducer, persistStore } from "redux-persist";
 const persistConfig = {
   key: "root",
   storage,
-   whitelist: ["tasks", "counter", "wishlist", "auth"], 
+   whitelist: ["tasks", "counter", "wishlist", "auth", "preferences"], 
 };
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   tasks: TaskReducer,
   counter: CounterReducer,
   wishlist: wishlistReducer,
+  preference: preferenceReducer,
   [baseApi.reducerPath]: baseApi.reducer, // RTK Query Reducer
 });
 

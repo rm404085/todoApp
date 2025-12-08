@@ -17,3 +17,9 @@ export interface Product {
   category?: string;
   image?: string;
 }
+
+export interface PreferencesState {
+  theme: "light" | "dark";
+  language: "en" | "bn";
+  layout: "grid" | "list";
+}

@@ -1,4 +1,5 @@
-import { useRegisterUserMutation } from "@/redux/api/baseApi";
+
+import { useRegisterUserMutation } from "@/redux/endPoints/authApi";
 import { useForm } from "react-hook-form";
 
 

@@ -12,10 +12,17 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
-import { useCreateProductsMutation } from "@/redux/api/baseApi";
 import type { Product } from "@/types/types";
+import { useCreateProductsMutation } from "@/redux/endPoints/productsApi";
+import { toast } from "sonner";
 
-export function AddProductModal() {
+interface AddProductModalProps {
+  onAddProduct: (product: Product) => void;
+}
+
+
+
+export function AddProductModal({ onAddProduct }: AddProductModalProps) {
   const form = useForm<Product>({
     defaultValues: {
       title: "",
@@ -25,19 +32,22 @@ export function AddProductModal() {
       image: "",
     },
   });
+ const [createProducts, { isLoading }] = useCreateProductsMutation();
+ const onSubmit: SubmitHandler<Product> = (values) => {
+    // Save to localStorage
+    const saved = JSON.parse(localStorage.getItem("localProducts") || "[]");
+    const newProduct = { ...values, id: Date.now() }; // assign unique id
+    localStorage.setItem("localProducts", JSON.stringify([newProduct, ...saved]));
 
-  const [createProducts, { isLoading }] = useCreateProductsMutation();
+    // Callback to parent
+    onAddProduct(newProduct);
 
-  const onSubmit: SubmitHandler<Product> = async (values) => {
-    try {
-      await createProducts(values).unwrap();
-      form.reset();
-      alert("Product added successfully!");
-      console.log(values)
-    } catch (err) {
-      console.error("Failed to add product:", err);
-      alert("Failed to add product!");
-    }
+    form.reset();
+    toast.success("Product added successfully!", {
+      description: "You can now see it in your products list",
+      duration: 4000,
+    });
+    console.log(newProduct);
   };
 
   return (
@@ -114,12 +124,12 @@ export function AddProductModal() {
             />
 
             <DialogFooter>
-             <DialogClose>
-                 <Button type="submit" className="w-full" disabled={isLoading}>
+              <DialogClose>
+ <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Saving..." : "Save Product"}
               </Button>
-
-             </DialogClose>
+              </DialogClose>
+             
             </DialogFooter>
           </form>
         </Form>
