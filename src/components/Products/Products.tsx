@@ -9,6 +9,7 @@ import RecentViewed from "./RecentView";
 import { useNavigate } from "react-router";
 import { addRecentView } from "@/utility/recentView";
 import { toast } from "sonner";
+import ProductFilter from "./ProductFilter";
 
 const Products = () => {
   const { data: apiData, isLoading, error } = useGetProductsQuery();
@@ -28,35 +29,66 @@ const Products = () => {
   const handleAddProduct = (newProduct: Product) => {
     setProducts((prev) => [newProduct, ...prev]);
   };
-
-  // Delete Product
-  const handleDeleteProduct = (id: number) => {
-    const updated = products.filter((p) => p.id !== id);
-    setProducts(updated);
+// Delete Product
+const handleDeleteProduct = (id: number) => {
+  setProducts((prev) => {
+    const updated = prev.filter((p) => p.id !== id);
     localStorage.setItem("localProducts", JSON.stringify(updated));
     toast.success("Product deleted successfully!");
-  };
+    return updated;
+  });
+};
 
-  // Update Product
-  const handleUpdateProduct = (product: Product) => {
-    const updatedTitle = prompt("Enter new product name", product.title);
-    if (!updatedTitle) return;
+// Update Product
+const handleUpdateProduct = (product: Product) => {
+  const updatedTitle = prompt("Enter new product name", product.title);
+  if (!updatedTitle) return;
 
-    const updatedProducts = products.map((p) =>
+  setProducts((prev) => {
+    const updatedProducts = prev.map((p) =>
       p.id === product.id ? { ...p, title: updatedTitle } : p
     );
-
-    setProducts(updatedProducts);
     localStorage.setItem("localProducts", JSON.stringify(updatedProducts));
     toast.success("Product updated successfully!");
-  };
+    return updatedProducts;
+  });
+};
+
 
   if (isLoading) return <h2 className="text-center text-xl">Loading...</h2>;
   if (error) return <h2 className="text-center text-red-600 text-xl">Error Occurred</h2>;
 
   return (
     <div className="px-5 py-10">
+      <ProductFilter
+  onFilter={({ search, category, minPrice, maxPrice }) => {
+  const filtered = products.filter((p) => {
+
+    const matchName = (p.title ?? "")
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchCategory = category
+      ? (p.category ?? "")
+          .toLowerCase()
+          .includes(category.toLowerCase())
+      : true;
+
+    const price = Number(p.price) || 0;
+    const matchPrice = price >= minPrice && price <= maxPrice;
+
+    return matchName && matchCategory && matchPrice;
+  });
+
+  setProducts(filtered);
+}}
+
+/>
+
       <AddProductModal onAddProduct={handleAddProduct} />
+      <div>
+        <RecentViewed />
+      </div>
 
       <h1 className="text-3xl font-bold text-center mb-8">Products</h1>
 
@@ -140,9 +172,7 @@ const Products = () => {
         })}
       </div>
 
-      <div>
-        <RecentViewed />
-      </div>
+      
     </div>
   );
 };

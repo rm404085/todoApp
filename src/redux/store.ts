@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   tasks: TaskReducer,
   counter: CounterReducer,
   wishlist: wishlistReducer,
-  preference: preferenceReducer,
+  preferences: preferenceReducer,
   [baseApi.reducerPath]: baseApi.reducer, // RTK Query Reducer
 });
 
