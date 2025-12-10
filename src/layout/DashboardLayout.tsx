@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const DashboardLayout = () => {
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full overflow-hidden">
+      <div className="flex h-screen mt-4 w-full overflow-hidden">
         {/* LEFT SIDEBAR */}
         <AppSidebar />
 

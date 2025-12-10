@@ -14,7 +14,7 @@ export default function SalesPieChart() {
   return (
     <div className="p-5 bg-white rounded-lg shadow">
       <h2 className="text-xl font-semibold mb-4">Sales Distribution</h2>
-      <PieChart width={350} height={250}>
+      <PieChart width={600} height={250}>
         <Pie data={data} cx={150} cy={120} outerRadius={80} fill="#8884d8" dataKey="value">
           {data.map((_, idx) => (
             <Cell key={idx} fill={COLORS[idx]} />

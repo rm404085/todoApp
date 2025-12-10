@@ -8,6 +8,19 @@ export interface ITask {
   isCompleted: boolean;    
   priority: TaskPriority;  
 }
+// src/types/types.ts
+
+export type User = {
+  id: string;
+  name: {
+    firstname: string;
+    lastname?: string; // optional
+  };
+  email: string;
+  role: "user" | "admin";
+};
+
+
 
 export interface Product {
   id: number;

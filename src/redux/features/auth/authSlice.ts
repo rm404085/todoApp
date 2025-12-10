@@ -6,6 +6,13 @@ interface AuthState {
   user: any | null;
 }
 
+interface User {
+  name?: string;
+  email?: string;
+  role?: "admin" | "user";   // 👈 role added
+  [key: string]: any;
+}
+
 
 
 const initialState: AuthState = {
@@ -19,7 +26,11 @@ export const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action: PayloadAction<{ token: string; user?: any }>) => {
       state.token = action.payload.token;
-      state.user = action.payload.user || null;
+      // If API does not provide role, default = user
+      state.user = {
+        role: action.payload.user?.role || "user",
+        ...action.payload.user,
+      } as User;
     },
     logout: (state) => {
       state.token = null;

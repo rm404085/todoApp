@@ -7,22 +7,28 @@ import Register from "@/page/login/register/Register";
 import WishlistPage from "@/page/WishList/WishListPage";
 import { createBrowserRouter } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
+import AdminRoute from "./AdminRoute"; // 👈 add
 import ProductDetails from "@/components/Products/ProductsDetails";
+
 import DashboardLayout from "@/layout/DashboardLayout";
 import DashboardHome from "@/page/dashboard/DashboardHome";
 import DashboardProducts from "@/page/dashboard/DashboardProducts.tsx/DashboardProducts";
-import DashboardUsers from "@/page/dashboard/DashboardUser/DashboardUsers";
+
 import DashboardOrders from "@/page/dashboard/DashboardOrder/DashboardOrders";
 import DashboardSettings from "@/page/dashboard/DashboardSettings/DashboardSettings";
+import DashboardUsers from "@/page/dashboard/DashboardUser/DashboardUsers";
+
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: App,
     children: [
+      // PUBLIC ROUTES
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
 
+      // USER PROTECTED ROUTES
       {
         path: "/products",
         element: (
@@ -33,9 +39,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: <ProductDetails></ProductDetails>
+        element: <ProductDetails />,
       },
-
       {
         path: "/wishlist",
         element: (
@@ -44,7 +49,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "/tasks",
         element: (
@@ -53,7 +57,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "/counter",
         element: (
@@ -62,18 +65,23 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-        // DASHBOARD ROUTES (Protected হলে পরে logic দিব)
-  {
-    path: "/dashboard",
-    element: <DashboardLayout />,
-    children: [
-      { index: true, element: <DashboardHome /> },
-      { path: "products", element: <DashboardProducts /> },
-      { path: "users", element: <DashboardUsers /> },
-      { path: "orders", element: <DashboardOrders /> },
-      { path: "settings", element: <DashboardSettings /> },
-    ],
-  },
+
+      // ADMIN DASHBOARD ROUTES (Role Protected)
+      {
+        path: "/dashboard",
+        element: (
+          <AdminRoute>
+            <DashboardLayout />
+          </AdminRoute>
+        ),
+        children: [
+          { index: true, element: <DashboardHome /> },
+          { path: "products", element: <DashboardProducts /> },
+          { path: "users", element: <DashboardUsers /> },
+          { path: "orders", element: <DashboardOrders /> },
+          { path: "settings", element: <DashboardSettings /> },
+        ],
+      },
     ],
   },
 ]);

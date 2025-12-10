@@ -1,4 +1,4 @@
-// components/dashboard/DashboardHome.tsx
+
 import StatsCard from "./StatsCard";
 import RevenueChart from "./Charts/RevenueChart";
 import SalesPieChart from "./Charts/SalesPieChart";
@@ -8,14 +8,14 @@ import RecentOrders from "./RecentOder";
 
 export default function DashboardHome() {
   const wishlist = useAppSelector((state) => state.wishlist.items);
-  const products = useAppSelector((state) => state.tasks.tasks);
+  const tasks = useAppSelector((state) => state.tasks.tasks);
 
   return (
     <div className="p-6 space-y-6">
 
       {/* Stats Section */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <StatsCard title="Total Products" value={products.length} color="blue" />
+        <StatsCard title="Total Tasks" value={tasks.length} color="blue" />
         <StatsCard title="Wishlist Items" value={wishlist.length} color="green" />
         <StatsCard title="Revenue" value="$12,400" color="yellow" />
       </div>
