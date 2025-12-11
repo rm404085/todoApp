@@ -18,6 +18,8 @@ import DashboardOrders from "@/page/dashboard/DashboardOrder/DashboardOrders";
 import DashboardSettings from "@/page/dashboard/DashboardSettings/DashboardSettings";
 import DashboardUsers from "@/page/dashboard/DashboardUser/DashboardUsers";
 
+import DashboardBookings from "@/page/dashboard/bookings/DashboardBookings";
+
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +82,7 @@ export const router = createBrowserRouter([
           { path: "users", element: <DashboardUsers /> },
           { path: "orders", element: <DashboardOrders /> },
           { path: "settings", element: <DashboardSettings /> },
+          {path: "bookings", element: <DashboardBookings></DashboardBookings>}
         ],
       },
     ],

@@ -20,6 +20,17 @@ export type User = {
   role: "user" | "admin";
 };
 
+export interface BookingProduct {
+  productId: number;
+  quantity: number;
+}
+
+export interface Booking {
+  id: number;
+  userId: number;
+  date: string;
+  products: BookingProduct[];
+}
 
 
 export interface Product {

@@ -5,7 +5,7 @@ import React from "react"
 
 const DashboardUsers: React.FC = () => {
   return (
-    <div className="p-6 bg-muted-foreground rounded-lg shadow">
+    <div className="p-6  rounded-lg shadow">
       <h1 className="text-2xl font-semibold mb-4">Manage Users</h1>
       <DataTableDemo />
     </div>
